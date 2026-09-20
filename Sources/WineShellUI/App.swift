@@ -15,9 +15,9 @@ final class AppState: ObservableObject {
     var wineURL: URL?
     var wineVersion: String = "unknown"
 
-    init() {
+    init(storeRoot: URL? = nil) {
         let home = FileManager.default.homeDirectoryForCurrentUser
-        self.store = BottleStore(root: home.appendingPathComponent("wine-shell/bottles"))
+        self.store = BottleStore(root: storeRoot ?? home.appendingPathComponent("wine-shell/bottles"))
         refresh()
     }
 
@@ -51,7 +51,6 @@ final class AppState: ObservableObject {
     }
 }
 
-@main
 struct WineShellApp: App {
     @StateObject private var state = AppState()
 
@@ -153,10 +152,4 @@ struct BottleDetailView: View {
 
 #else
 // Linux/Windows build: GUI needs macOS. Core stays fully usable + tested.
-@main
-struct WineShellLinuxMain {
-    static func main() {
-        print("wine-shell GUI requires macOS — use WineKit as a library here.")
-    }
-}
 #endif
