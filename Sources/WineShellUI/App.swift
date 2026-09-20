@@ -56,7 +56,7 @@ public struct WineShellApp: App {
 
     public init() {}
 
-    var body: some Scene {
+    public var body: some Scene {
         WindowGroup {
             BottleListView()
                 .environmentObject(state)
