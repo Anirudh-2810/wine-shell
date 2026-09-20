@@ -11,7 +11,9 @@ final class AppStateTests: XCTestCase {
     private func freshState() throws -> (AppState, URL) {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        return (AppState(storeRoot: dir), dir)
+        let state = AppState(storeRoot: dir)
+        state.wineVersion = "9.0"
+        return (state, dir)
     }
 
     func testInitialIdle() throws {
