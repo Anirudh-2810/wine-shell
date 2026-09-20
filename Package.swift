@@ -9,6 +9,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "WineKit", path: "Sources/WineKit"),
+        .executableTarget(name: "WineShell", dependencies: ["WineKit"], path: "Sources/WineShell"),
         .testTarget(name: "WineKitTests", dependencies: ["WineKit"], path: "Tests/WineKitTests"),
     ]
 )
