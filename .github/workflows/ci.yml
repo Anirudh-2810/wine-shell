@@ -19,8 +19,9 @@ jobs:
         run: |
           export WINEPREFIX="$RUNNER_TEMP/bottle-ci"
           export WINEDEBUG=fixme-all
-          timeout 120 wine64 wineboot --init
-          timeout 60 wine64 cmd /c echo bottle-alive
+          WINEBIN="$(command -v wine64 || command -v wine)"
+          timeout 120 "$WINEBIN" wineboot --init
+          timeout 60 "$WINEBIN" cmd /c echo bottle-alive
   macos-arm:
     runs-on: macos-15
     steps:
