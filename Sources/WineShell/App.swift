@@ -153,5 +153,10 @@ struct BottleDetailView: View {
 
 #else
 // Linux/Windows build: GUI needs macOS. Core stays fully usable + tested.
-print("wine-shell GUI requires macOS — use WineKit as a library here.")
+@main
+struct WineShellLinuxMain {
+    static func main() {
+        print("wine-shell GUI requires macOS — use WineKit as a library here.")
+    }
+}
 #endif

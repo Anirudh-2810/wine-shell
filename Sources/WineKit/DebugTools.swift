@@ -8,6 +8,16 @@ public struct RunRecord: Codable, Equatable {
     public var args: [String]
     public var exitCode: Int32
     public var logTail: String
+
+    public init(date: Date, bottle: String, program: String, args: [String],
+                exitCode: Int32, logTail: String) {
+        self.date = date
+        self.bottle = bottle
+        self.program = program
+        self.args = args
+        self.exitCode = exitCode
+        self.logTail = logTail
+    }
 }
 
 /// In-memory run log (cap 200 records). Powers the debug console view.
