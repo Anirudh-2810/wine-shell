@@ -59,13 +59,14 @@ public struct RuntimeInstaller {
 
     /// Extracts a `.tar.gz`/`.tar.xz` runtime into `destination` (symlinks preserved).
     public func extract(archive: URL, to destination: URL) throws {
-        guard fileManager.isExecutableFile(atPath: "/bin/tar") else {
+        let env = "/usr/bin/env" // tar lives in /bin on Linux, /usr/bin on macOS
+        guard fileManager.isExecutableFile(atPath: env) else {
             throw RuntimeInstallError.toolMissing("tar")
         }
         try fileManager.createDirectory(at: destination, withIntermediateDirectories: true)
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/bin/tar")
-        process.arguments = ["-xf", archive.path, "-C", destination.path]
+        process.executableURL = URL(fileURLWithPath: env)
+        process.arguments = ["tar", "-xf", archive.path, "-C", destination.path]
         try process.run()
         process.waitUntilExit()
         guard process.terminationStatus == 0 else {

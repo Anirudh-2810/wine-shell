@@ -66,12 +66,13 @@ public struct BottleArchive {
     }
 
     private func tar(_ args: String...) throws {
-        guard fileManager.isExecutableFile(atPath: "/bin/tar") else {
+        let env = "/usr/bin/env"
+        guard fileManager.isExecutableFile(atPath: env) else {
             throw ArchiveError.toolMissing
         }
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/bin/tar")
-        process.arguments = args
+        process.executableURL = URL(fileURLWithPath: env)
+        process.arguments = ["tar"] + args
         try process.run()
         process.waitUntilExit()
         guard process.terminationStatus == 0 else {
