@@ -51,8 +51,10 @@ final class AppState: ObservableObject {
     }
 }
 
-struct WineShellApp: App {
+public struct WineShellApp: App {
     @StateObject private var state = AppState()
+
+    public init() {}
 
     var body: some Scene {
         WindowGroup {
