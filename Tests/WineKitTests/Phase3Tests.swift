@@ -85,7 +85,7 @@ final class DebugToolsTests: XCTestCase {
         store.capacity = 3
         for i in 0..<5 {
             store.append(RunRecord(date: Date(), bottle: "b", program: "p\(i)", args: [],
-                                   exitCode: i % 2 == 0 ? 0 : 1, logTail: "t"))
+                                   exitCode: i % 2 == 0 ? 1 : 0, logTail: "t"))
         }
         XCTAssertEqual(store.records.count, 3)
         XCTAssertEqual(store.filtered(failuresOnly: true).count, 2)

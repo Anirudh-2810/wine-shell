@@ -36,6 +36,9 @@ public struct SteamDetector {
             if let text = try? String(contentsOf: vdf, encoding: .utf8) {
                 libraries += parseLibraryFolders(text, relativeTo: root)
             }
+            // libraryfolders.vdf usually re-lists its own dir — dedupe paths.
+            var seen = Set<String>()
+            libraries = libraries.filter { seen.insert($0.path).inserted }
             let found = libraries.flatMap { manifests(in: $0) }
             if !found.isEmpty { return found }
         }

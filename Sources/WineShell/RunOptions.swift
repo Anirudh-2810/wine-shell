@@ -100,7 +100,7 @@ struct DebugConsoleView: View {
 /// Binding helper: optional picker selection with a concrete default.
 extension Binding where Value == GraphicsBackend? {
     func orDefault(_ dflt: GraphicsBackend) -> Binding<GraphicsBackend> {
-        Binding(get: { wrappedValue ?? dflt }, set: { wrappedValue = $0 })
+        Binding<GraphicsBackend>(get: { wrappedValue ?? dflt }, set: { wrappedValue = $0 })
     }
 }
 #endif
