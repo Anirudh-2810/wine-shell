@@ -15,6 +15,10 @@ jobs:
         run: swift build
       - name: Unit tests
         run: swift test
+      - name: Swift integration (WineKit drives Wine)
+        run: |
+          export WINE_EXE="$(command -v wine64 || command -v wine)"
+          swift test --filter LauncherIntegrationTests
       - name: Integration (real Wine, headless)
         run: |
           export WINEPREFIX="$RUNNER_TEMP/bottle-ci"
