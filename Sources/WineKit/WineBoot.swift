@@ -8,27 +8,27 @@ public struct WineBoot {
         self.launcher = launcher
     }
 
-    private func boot(_ bottle: Bottle, _ command: String) async throws -> RunResult {
+    private func boot(_ bottle: Bottle, _ command: [String]) async throws -> RunResult {
         let env = WineEnvironment.build(bottle: bottle)
-        return try await launcher.run(args: [command], env: env, timeout: 90)
+        return try await launcher.run(args: command, env: env, timeout: 90)
     }
 
     /// First-time prefix creation. Throws on hang (timeout) or failure.
     @discardableResult
     public func initialize(_ bottle: Bottle) async throws -> RunResult {
-        try await boot(bottle, "wineboot --init")
+        try await boot(bottle, ["wineboot", "--init"])
     }
 
     /// Refresh prefix after runtime upgrade.
     @discardableResult
     public func update(_ bottle: Bottle) async throws -> RunResult {
-        try await boot(bottle, "wineboot --update")
+        try await boot(bottle, ["wineboot", "--update"])
     }
 
     /// CrossOver "Simulate Reboot" for installers that demand it.
     @discardableResult
     public func simulateReboot(_ bottle: Bottle) async throws -> RunResult {
-        try await boot(bottle, "wineboot --restart")
+        try await boot(bottle, ["wineboot", "--restart"])
     }
 
     /// CrossOver "Quit All": kill every process in the bottle (unsaved work may be lost).
